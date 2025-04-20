@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id
+  name         String
+  email        String   @unique
+  hashPassword String
+  boards       Board[]
+  createdAt    DateTime
+  updatedAt    DateTime
+}
+
+model Board {
+  id          String      @id
+  name        String
+  description String?
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  columns     Column[]
+  issues      Issue[]
+  issueTypes  IssueType[]
+  createdAt   DateTime
+  updatedAt   DateTime
+}
+
+model Column {
+  id          String  @id
+  name        String
+  description String?
+  boardId     String
+  board       Board   @relation(fields: [boardId], references: [id])
+  issues      Issue[]
+}
+
+model Issue {
+  id            String    @id
+  name          String
+  description   String?
+  priority      Int
+  boardId       String
+  board         Board     @relation(fields: [boardId], references: [id])
+  columnId      String?
+  column        Column?   @relation(fields: [columnId], references: [id])
+  issueTypeId   String
+  issueType     IssueType @relation(fields: [issueTypeId], references: [id])
+  parentIssueId String?
+  parentIssue   Issue?    @relation("IssueRelation", fields: [parentIssueId], references: [id])
+  childIssues   Issue[]   @relation("IssueRelation")
+  createdAt     DateTime
+  updatedAt     DateTime
+}
+
+model IssueType {
+  id          String  @id
+  name        String
+  description String?
+  color       String
+  issue       Issue[]
+  boardId     String
+  board       Board   @relation(fields: [boardId], references: [id])
+}
