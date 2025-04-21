@@ -23,7 +23,7 @@ model Board {
   name        String
   description String?
   userId      String
-  user        User        @relation(fields: [userId], references: [id])
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   columns     Column[]
   issues      Issue[]
   issueTypes  IssueType[]
@@ -36,24 +36,24 @@ model Column {
   name        String
   description String?
   boardId     String
-  board       Board   @relation(fields: [boardId], references: [id])
+  board       Board   @relation(fields: [boardId], references: [id], onDelete: Cascade)
   issues      Issue[]
 }
 
 model Issue {
-  id            String    @id
+  id            String     @id
   name          String
   description   String?
   priority      Int
   boardId       String
-  board         Board     @relation(fields: [boardId], references: [id])
+  board         Board      @relation(fields: [boardId], references: [id], onDelete: Cascade)
   columnId      String?
-  column        Column?   @relation(fields: [columnId], references: [id])
-  issueTypeId   String
-  issueType     IssueType @relation(fields: [issueTypeId], references: [id])
+  column        Column?    @relation(fields: [columnId], references: [id], onDelete: SetNull)
+  issueTypeId   String?
+  issueType     IssueType? @relation(fields: [issueTypeId], references: [id], onDelete: SetNull)
   parentIssueId String?
-  parentIssue   Issue?    @relation("IssueRelation", fields: [parentIssueId], references: [id])
-  childIssues   Issue[]   @relation("IssueRelation")
+  parentIssue   Issue?     @relation("IssueRelation", fields: [parentIssueId], references: [id])
+  childIssues   Issue[]    @relation("IssueRelation")
   createdAt     DateTime
   updatedAt     DateTime
 }
@@ -65,5 +65,5 @@ model IssueType {
   color       String
   issue       Issue[]
   boardId     String
-  board       Board   @relation(fields: [boardId], references: [id])
+  board       Board   @relation(fields: [boardId], references: [id], onDelete: Cascade)
 }

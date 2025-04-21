@@ -1,13 +1,14 @@
 import { Column } from '@/domain/entities/column';
-import { ColumnUpdateVO } from '@/domain/value-objects/column/update.vo';
+import { ListColumnVO } from '@/domain/value-objects/column/list-column.vo';
+import { UpdateColumnVO } from '@/domain/value-objects/column/update-column.vo';
 
 export interface ColumnRepository {
   create(column: Column): Promise<void>;
-  listByBoardId(boardId: Column['boardId']): Promise<Column[]>;
+  list(listColumnVO: ListColumnVO): Promise<Column[]>;
   getById(columnId: Column['id']): Promise<Column>;
   update(
     columnId: Column['id'],
-    columnUpdateVO: ColumnUpdateVO,
+    updateColumnVO: UpdateColumnVO,
   ): Promise<Column>;
   delete(columnId: Column['id']): Promise<Column>;
 }

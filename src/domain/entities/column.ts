@@ -1,14 +1,10 @@
-import { IssueRepository } from '@/domain/repositories/issue.repository';
+import { Board } from '@/domain/entities/board';
 
 export class Column {
   constructor(
     public id: string,
     public name: string,
     public description: string | null,
-    public boardId: string,
+    public boardId: Board['id'],
   ) {}
-
-  async getIssues(issueRepository: IssueRepository) {
-    issueRepository.listByColumnId(this.id);
-  }
 }

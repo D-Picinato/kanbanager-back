@@ -1,5 +1,5 @@
 import { IssueType } from '@/domain/entities/issue-type';
-import { IssueTypeUpdateVO } from '@/domain/value-objects/issue-type/update.vo';
+import { UpdateIssueTypeVO } from '@/domain/value-objects/issue-type/update-issue-type.vo';
 
 export interface IssueTypeRepository {
   create(issueType: IssueType): Promise<void>;
@@ -7,7 +7,7 @@ export interface IssueTypeRepository {
   getById(issueTypeId: IssueType['id']): Promise<IssueType>;
   update(
     issueTypeId: IssueType['id'],
-    userUpdateVO: IssueTypeUpdateVO,
+    updateIssueTypeVO: UpdateIssueTypeVO,
   ): Promise<IssueType>;
   delete(issueTypeId: IssueType['id']): Promise<IssueType>;
 }

@@ -1,13 +1,9 @@
-import { UserRepository } from '@/domain/repositories/user.repository';
+import { User } from '@/domain/entities/user';
 
 export class Session {
   constructor(
     public token: string,
     public ip: string,
-    public userId: string,
+    public userId: User['id'],
   ) {}
-
-  async getUser(userRepository: UserRepository) {
-    userRepository.getById(this.userId);
-  }
 }

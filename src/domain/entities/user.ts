@@ -1,6 +1,3 @@
-import { BoardRepository } from '@/domain/repositories/board.repository';
-import { SessionRepository } from '@/domain/repositories/session.repository';
-
 export class User {
   constructor(
     public id: string,
@@ -10,12 +7,4 @@ export class User {
     public createdAt: Date,
     public updatedAt: Date,
   ) {}
-
-  async getBoards(boardRepository: BoardRepository) {
-    return await boardRepository.listByUserId(this.id);
-  }
-
-  getSessions(sessionRepository: SessionRepository) {
-    return sessionRepository.listByUserId(this.id);
-  }
 }
